@@ -26,13 +26,22 @@ export async function main(ns) {
         if (ns.hasRootAccess(uniqServers[i])) {
             ns.tprintf("%s already rooted", uniqServers[i]);
         } else {
-            ns.brutessh(uniqServers[i]);
-            ns.ftpcrack(uniqServers[i]);
-            ns.relaysmtp(uniqServers[i]);
-            ns.httpworm(uniqServers[i]);
-            ns.sqlinject(uniqServers[i]);
-            ns.nuke(uniqServers[i]);
-            ns.tprintf("%s rooted", uniqServers[i]);
+            try {
+                ns.brutessh(uniqServers[i]);
+                ns.ftpcrack(uniqServers[i]);
+                ns.relaysmtp(uniqServers[i]);
+                ns.httpworm(uniqServers[i]);
+                ns.sqlinject(uniqServers[i]);
+            } catch(err) {
+                ns.printf("Missing port opener")
+            }
+            
+            try {
+                ns.nuke(uniqServers[i]);
+                ns.tprintf("%s rooted", uniqServers[i]);
+            } catch(err) {
+                ns.tprintf("Failed to root %s", uniqServers[i])
+            }
         }
     }
 }
