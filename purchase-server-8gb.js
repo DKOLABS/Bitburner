@@ -9,6 +9,8 @@ export async function main(ns) {
             ns.scp("base-hack.js", hostname);
             ns.exec("base-hack.js", hostname, 3, "harakiri-sushi");
             ++i;
+        } else {
+            return;
         }
     }
 }
